@@ -1,0 +1,30 @@
+<div>
+  <form (ngSubmit)="register()">
+    <h1>Inscription</h1>
+    <div class="form-block">
+      <label>Name</label>
+      <input placeholder="Name" name="name" 
+        [(ngModel)]="user.name" [formControl]="name" />
+      <div *ngIf="name.invalid">{{ getErrorMessageName() }}</div>
+    </div>
+    <div class="form-block">
+      <label>Surname</label>
+      <input placeholder="Surname" name="surname" 
+        [(ngModel)]="user.surname" [formControl]="surname" />
+      <div *ngIf="surname.invalid">{{ getErrorMessageSurname() }}</div>
+    </div>
+    <div class="form-block">
+      <label>Email</label>
+      <input type="email" placeholder="Email" name="email" 
+        [(ngModel)]="user.email" [formControl]="email" />
+      <div *ngIf="email.invalid">{{ getErrorMessageEmail() }}</div>
+    </div>
+    <div class="form-block">
+      <label>Password</label>
+      <input type="password" placeholder="Password" name="password" 
+        [(ngModel)]="user.password" [formControl]="password" />
+      <div *ngIf="password.invalid">{{ getErrorMessagePassword() }}</div>
+    </div>
+    <button>Register</button>
+  </form>
+</div>
