@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Website</title>
+    <style>
+      * {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar {
+  width: 20vw;
+  height: 100vh;
+  background-color: #f2f2f2;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.sidebar h1 {
+  text-align: center;
+  margin-top: 0;
+}
+
+.sidebar img {
+  display: block;
+  margin: 0 auto;
+  width: 80%;
+  height: auto;
+  margin-top: 20px;
+}
+
+.sidebar input[type="text"] {
+  display: block;
+  margin: 0 auto;
+  width: 80%;
+  height: 40px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-top: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.sidebar li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.sidebar li:last-child {
+  border-bottom: none;
+}
+
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h1>My Sidebar</h1>
+      <img src="logo.png" alt="Logo">
+      <input type="text" placeholder="Search...">
+      <ul>
+        <li>Data 1</li>
+        <li>Data 2</li>
+        <li>Data 3</li>
+      </ul>
+    </div>
+  </body>
+</html>

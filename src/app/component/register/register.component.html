@@ -21,10 +21,18 @@
     </div>
     <div class="form-block">
       <label>Password</label>
-      <input type="password" placeholder="Password" name="password" 
-        [(ngModel)]="user.password" [formControl]="password" />
-      <div *ngIf="password.invalid">{{ getErrorMessagePassword() }}</div>
+      <input [type]="show ? 'text' : 'password'" placeholder="Password" name="password" 
+        [(ngModel)]="passwordString1" [formControl]="passwordForm1" />
+      <div *ngIf="passwordForm1.invalid">{{ getErrorMessagePassword() }}</div>
     </div>
+    <div class="form-block">
+      <label>Confirm password</label>
+      <input [type]="show ? 'text' : 'password'" placeholder="Password" name="password2" 
+        [(ngModel)]="passwordString2" [formControl]="passwordForm2" />
+      <div *ngIf="passwordForm2.invalid">{{ getErrorMessagePassword() }}</div>
+    </div>
+    <div *ngIf="!(passwordString1 === passwordString2)">{{ getErrorMessagePassword() }}</div>
+    <button (click)="showPassword()">{{ show ? 'Hide password' : 'Show password' }}</button>
     <button>Register</button>
   </form>
 </div>

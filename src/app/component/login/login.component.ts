@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginService } from 'src/app/service/login.service';
 import { GlobalConstants } from 'src/assets/global/global-constants';
 
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
   @Output()
   register = new EventEmitter();
 
-  constructor(private service: LoginService) { }
+  constructor(private service: LoginService, private router: Router) { }
 
   ngOnInit(): void { }
 
@@ -31,8 +32,9 @@ export class LoginComponent implements OnInit {
       this.service.login(this.credentials).subscribe({
         next: (result) => {
           this.user = result;
-          const session = { 'user': this.user.user, 'role': this.user.role[0].authority }
-          sessionStorage.setItem('user', JSON.stringify(session))
+          const session = { 'user': this.user.user, 'role': this.user.role[0].authority };
+          sessionStorage.setItem('user', JSON.stringify(session));
+          this.router.navigate(['']);
         },
         error: (err: { error: { error: string; }; }) => {
           this.errorMessage = err.error.error;
@@ -55,7 +57,7 @@ export class LoginComponent implements OnInit {
   getErrorMessagePassword() {
     return this.password.hasError('required') 
       ? GlobalConstants.ERROR_PASSWORD 
-      : GlobalConstants.INVALID_PASSWORD;
+      : GlobalConstants.MIN_PASSWORD;
   }
 
   changePage() {

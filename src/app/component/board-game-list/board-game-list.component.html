@@ -1,4 +1,9 @@
 <div class="sidebar">
+  <div>
+    <a routerLink="/login">log in</a>
+    <a routerLink="/register">register</a>
+    <a routerLink="/my-account">my account</a>
+  </div>
   <div *ngFor="let boardGame of boardGames">
     {{ boardGame.name }} - {{ boardGame.description }}
   </div>

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User } from 'src/app/model/user';
 import { LoginService } from 'src/app/service/login.service';
 import { GlobalConstants } from 'src/assets/global/global-constants';
@@ -14,25 +15,31 @@ export class RegisterComponent implements OnInit {
   @Output()
   back = new EventEmitter();
 
+  show = false;
   user = new User();
   name = new FormControl('', [Validators.required]);
   surname = new FormControl('', [Validators.required]);
   email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required, Validators.minLength(8)]);
-  
-  constructor(private service: LoginService) { }
+  passwordString1 = "";
+  passwordString2 = "";
+  passwordForm1 = new FormControl('', [Validators.required, Validators.minLength(8)]);
+  passwordForm2 = new FormControl('', [Validators.required, Validators.minLength(8)]);
+
+  constructor(private service: LoginService, private router: Router) { }
 
   ngOnInit(): void { }
 
   register() {
-    if (this.email.valid && this.password.valid 
-        && this.name.valid && this.surname.valid) {
+    if (this.email.valid && this.passwordForm1.valid
+      && this.name.valid && this.surname.valid
+      && this.passwordString1 === this.passwordString2) {
+      this.user.password = this.passwordString1;
       this.service.register(this.user).subscribe({
         next: (response) => {
           this.backEvent();
-          console.log(response);
+          this.router.navigate(['/login']);
         },
-        error: (err) => { 
+        error: (err) => {
           console.log(err);
         }
       })
@@ -52,15 +59,23 @@ export class RegisterComponent implements OnInit {
   }
 
   getErrorMessageEmail() {
-    return this.email.hasError('required') 
-      ? GlobalConstants.ERROR_EMAIL 
+    return this.email.hasError('required')
+      ? GlobalConstants.ERROR_EMAIL
       : GlobalConstants.INVALID_EMAIL;
   }
 
   getErrorMessagePassword() {
-    return this.password.hasError('required') 
-      ? GlobalConstants.ERROR_PASSWORD 
-      : GlobalConstants.INVALID_PASSWORD;
+    if (!(this.passwordString1 === this.passwordString2)) {
+      return GlobalConstants.INVALID_PASSWORD;
+    }
+    return (this.passwordForm1.hasError('required')
+      || this.passwordForm2.hasError('required'))
+      ? GlobalConstants.ERROR_PASSWORD
+      : GlobalConstants.MIN_PASSWORD;
+  }
+
+  showPassword() {
+    this.show = !this.show;
   }
 
 }
