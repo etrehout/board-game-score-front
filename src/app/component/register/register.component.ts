@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
   @Output()
   back = new EventEmitter();
 
+  error = "";
   show = false;
   user = new User();
   name = new FormControl('', [Validators.required]);
@@ -40,6 +41,7 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['/login']);
         },
         error: (err) => {
+          this.error = "User already exists!";
           console.log(err);
         }
       })
